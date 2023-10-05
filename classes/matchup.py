@@ -5,10 +5,11 @@ class Matchup:
     # representing a single matchup and parses it
     def __init__(self, game):
         self.date = game.find('tr',{'class':'date'}).td.string
-        self.winner = team.Team(game.find('tr',{'class':'winner'}))
-        self.loser = team.Team(game.find('tr',{'class':'loser'}))
+        self.away = team.Team(game.tr.findNext('tr'))
+        self.home = team.Team(game.tr.findNext('tr').findNext('tr'))
+        
     
     # string representation of a matchup
     def __str__(self):
-        return self.date + "\n" + self.winner.name + " " + self.winner.score + \
-            "\n" + self.loser.name + " " + self.loser.score + "\n"
+        return self.date + "\n" + self.away.name + " " + self.away.score + \
+            "\n" + self.home.name + " " + self.home.score + "\n"
