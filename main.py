@@ -1,33 +1,30 @@
 from bs4 import BeautifulSoup
 import requests
 
-URL = "https://www.pro-football-reference.com/teams/"
+URL = "https://www.pro-football-reference.com/"
 
-# Error handling for the HTTP request
-response = requests.get(URL)
-if response.status_code != 200:
-    print("Failed to get data")
-    exit()
+r = requests.get(URL)
 
-soup = BeautifulSoup(response.content, "lxml")
+webpage = BeautifulSoup(r.content, "lxml")
 
-# Initialize dictionary for team names and URLs
-nameDic = {}
+# find weekly results tables
+weeklyResults = webpage.find('div',{'id':'scores'})
 
-# Locate the table and tbody
-teamTable = soup.find("table", {"id": "teams_active"}).find("tbody")
+# list of individual matchups
+matchups = weeklyResults.find_all('div',{'class':'game_summary expanded nohover'})
 
-# Populate the dictionary
-for team in teamTable.find_all("tr", {"class": ""}):
-    tnTag = team.find("th", {"data-stat": "team_name"})
-    teamName = tnTag.a.text
-    teamUrl = tnTag.a["href"]
+#print each matchup
+for matchup in matchups:
+    date = matchup.find('tr',{'class':'date'}).td.text
+
+    winner = matchup.find('tr',{'class':'winner'})
+    loser = matchup.find('tr',{'class':'loser'})
     
-    nameDic[teamName] = teamUrl
+    print(date)
+    print(winner.td.text + " - " + winner.td.next_sibling.next_sibling.text)
+    print(loser.td.text + " - " + loser.td.next_sibling.next_sibling.text)
+    print()
 
 
-inp = input("Enter a team name: ")
 
-for selection in nameDic.keys():
-    if inp == selection:
-        print("You've selected the " + selection + "!")
+
