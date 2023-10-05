@@ -7,3 +7,10 @@ class Matchup:
         self.date = game.find('tr',{'class':'date'}).td.string
         self.away = team.Team(game.tr.findNext('tr'))
         self.home = team.Team(game.tr.findNext('tr').findNext('tr'))
+
+    # returns the winner of the matchup
+    def winner(self):
+        if self.away.score > self.home.score:
+            return self.away
+        else:
+            return self.home
