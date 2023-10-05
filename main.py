@@ -1,4 +1,4 @@
-import matchup
+from classes import matchup
 from bs4 import BeautifulSoup
 import requests
 
