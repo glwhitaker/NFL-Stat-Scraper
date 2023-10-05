@@ -15,14 +15,14 @@ matchups = weeklyResults.find_all('div',{'class':'game_summary expanded nohover'
 
 #print each matchup
 for matchup in matchups:
-    date = matchup.find('tr',{'class':'date'}).td.text
+    date = matchup.find('tr',{'class':'date'}).td.string
 
     winner = matchup.find('tr',{'class':'winner'})
     loser = matchup.find('tr',{'class':'loser'})
     
     print(date)
-    print(winner.td.text + " - " + winner.td.next_sibling.next_sibling.text)
-    print(loser.td.text + " - " + loser.td.next_sibling.next_sibling.text)
+    print(winner.td.string + " - " + winner.td.next_sibling.next_sibling.string)
+    print(loser.td.string + " - " + loser.td.next_sibling.next_sibling.string)
     print()
 
 
