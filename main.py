@@ -1,3 +1,4 @@
+import matchup
 from bs4 import BeautifulSoup
 import requests
 
@@ -14,16 +15,10 @@ weeklyResults = webpage.find('div',{'id':'scores'})
 matchups = weeklyResults.find_all('div',{'class':'game_summary expanded nohover'})
 
 #print each matchup
-for matchup in matchups:
-    date = matchup.find('tr',{'class':'date'}).td.string
-
-    winner = matchup.find('tr',{'class':'winner'})
-    loser = matchup.find('tr',{'class':'loser'})
+for game in matchups:
+    myMatch = matchup.Matchup(game)
     
-    print(date)
-    print(winner.td.string + " - " + winner.td.next_sibling.next_sibling.string)
-    print(loser.td.string + " - " + loser.td.next_sibling.next_sibling.string)
-    print()
+    print(myMatch)
 
 
 
