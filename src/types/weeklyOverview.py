@@ -31,7 +31,7 @@ def largestMargin(allMatchups):
 
 def findWeeklyResults(webpage):
 
-    file = open('report.csv', 'w')
+    file = open('weeklyOverview.csv', 'w')
     writer = csv.writer(file)
 
     # find weekly results tables

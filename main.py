@@ -7,7 +7,13 @@ URL = "https://www.pro-football-reference.com/"
 r = requests.get(URL)
 webpage = BeautifulSoup(r.content, "lxml")
 
-WO.findWeeklyResults(webpage)
+print("\nWelcome to NFL Scraper!\n")
 
+print("Select an option:")
+print("1. Weekly Overview")
+print()
 
+input = input("Enter option: ")
 
+if input == "1":
+    WO.findWeeklyResults(webpage)
