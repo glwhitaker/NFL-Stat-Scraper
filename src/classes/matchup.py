@@ -1,4 +1,4 @@
-from classes import team
+from . import team
 
 class Matchup:
     # constructor takes in a BeautifulSoup object

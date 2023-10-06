@@ -1,5 +1,5 @@
+from ..classes import matchup as MU
 import csv
-from classes import matchup
 
 def findWeeklyResults(webpage):
 
@@ -17,7 +17,7 @@ def findWeeklyResults(webpage):
 
     # loop through each matchup and create a Matchup object
     for match in weeklyResults:
-        myMatch = matchup.Matchup(match)
+        myMatch = MU.Matchup(match)
 
         # add Matchup object to list
         allMatchups.append(myMatch)
