@@ -1,6 +1,34 @@
 from ..classes import matchup as MU
 import csv
 
+def highestScore(allMatchups):
+    highScore = 0
+    for match in allMatchups:
+        if match.away.score > highScore:
+            highScore = match.away.score
+            highTeam = match.away.name
+        if match.home.score > highScore:
+            highScore = match.home.score
+            highTeam = match.home.name
+    
+    return highTeam, highScore
+
+
+def largestMargin(allMatchups):
+    largeMargin = 0
+    for match in allMatchups:
+        if match.away.score > match.home.score:
+            margin = match.away.score - match.home.score
+        else:
+            margin = match.home.score - match.away.score
+
+        if margin > largeMargin:
+            largeMargin = margin
+            largeTeam = match.winner().name
+        
+    return largeTeam, largeMargin
+
+
 def findWeeklyResults(webpage):
 
     file = open('report.csv', 'w')
@@ -16,32 +44,27 @@ def findWeeklyResults(webpage):
     writer.writerow([])
 
     # loop through each matchup and create a Matchup object
-    for match in weeklyResults:
-        myMatch = MU.Matchup(match)
-
-        # add Matchup object to list
-        allMatchups.append(myMatch)
-
-        # write to csv
-        writer.writerow([myMatch.date])
-        writer.writerow([myMatch.away.name, myMatch.away.score])
-        writer.writerow([myMatch.home.name, myMatch.home.score])
-        writer.writerow([myMatch.winner().name])
+    for match in range(0,len(weeklyResults), 2):
+        # create two matchups at a time
+        allMatchups.append(MU.Matchup(weeklyResults[match]))
+        allMatchups.append(MU.Matchup(weeklyResults[match+1]))
+        
+        # write matchups two per row to csv
+        writer.writerow([allMatchups[match].date, '', '', allMatchups[match+1].date])
+        writer.writerow([allMatchups[match].away.name, allMatchups[match].away.score, '', allMatchups[match+1].away.name, allMatchups[match+1].away.score])
+        writer.writerow([allMatchups[match].home.name, allMatchups[match].home.score, '', allMatchups[match+1].home.name, allMatchups[match+1].home.score])
         writer.writerow([])
 
+
+    # find highest scoring team
+    writer.writerow(["Higest Scoring Team"])
+    highTeam, highScore = highestScore(allMatchups)
+    writer.writerow([highTeam, highScore])
+
     # find the largest margin of victory
-    largestMargin = 0
-    for match in allMatchups:
-        if match.away.score > match.home.score:
-            margin = match.away.score - match.home.score
-        else:
-            margin = match.home.score - match.away.score
-
-        if margin > largestMargin:
-            largestMargin = margin
-            largestTeam = match.winner().name
-
-    writer.writerow(["The largest margin of victory was the " + largestTeam + " by " + str(largestMargin) + " points."])
+    writer.writerow(["Largest Margin of Victory"])
+    largeTeam, largeMargin = largestMargin(allMatchups)
+    writer.writerow([largeTeam, largeMargin])
 
 
     file.close()
