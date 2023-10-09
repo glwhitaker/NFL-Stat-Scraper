@@ -16,4 +16,5 @@ print()
 input = input("Enter option: ")
 
 if input == "1":
-    WO.findWeeklyResults(webpage)
+    result = WO.findWeeklyResults(webpage)
+    WO.writeOverview(result)

@@ -29,36 +29,22 @@ def largestMargin(allMatchups):
     return largeTeam, largeMargin
 
 
-def findWeeklyResults(webpage):
-
+def writeOverview(allMatchups):
     file = open('weeklyOverview.csv', 'w')
     writer = csv.writer(file)
-
-    # find weekly results tables
-    weeklyResults = webpage.find('div',{'id':'scores'}).find_all('div',{'class':'game_summary expanded nohover'})
-
-    allMatchups = []
 
     # write header row
     writer.writerow(["Weekly Results"])
     writer.writerow([])
-
-    # loop through each matchup and create a Matchup object
-    for match in weeklyResults:
-        # create Matchup object
-        matchup = MU.Matchup(match)
-        # add Matchup object to list
-        allMatchups.append(matchup)
-        
-        # write matchups tO CSV
-        writer.writerow([matchup.date])
-        writer.writerow([matchup.away.name, matchup.away.score])
-        writer.writerow([matchup.home.name, matchup.home.score])
+    
+    for match in allMatchups:
+        writer.writerow([match.date])
+        writer.writerow([match.away.name, match.away.score])
+        writer.writerow([match.home.name, match.home.score])
         writer.writerow([])
 
-
     # find highest scoring team
-    writer.writerow(["Higest Scoring Team"])
+    writer.writerow(["Highest Scoring Team"])
     highTeam, highScore = highestScore(allMatchups)
     writer.writerow([highTeam, highScore])
 
@@ -69,3 +55,21 @@ def findWeeklyResults(webpage):
 
 
     file.close()
+
+
+
+def findWeeklyResults(webpage):
+    # find weekly results tables
+    weeklyResults = webpage.find('div',{'id':'scores'}).find_all('div',{'class':'game_summary expanded nohover'})
+
+    allMatchups = []
+
+    # loop through each matchup and create a Matchup object
+    for match in weeklyResults:
+        # create Matchup object
+        matchup = MU.Matchup(match)
+        # add Matchup object to list
+        allMatchups.append(matchup)
+
+    return allMatchups
+        
