@@ -1,5 +1,6 @@
 from . import team
 
+# define Matchup class
 class Matchup:
     # constructor takes in a BeautifulSoup object
     # representing a single matchup and parses it
