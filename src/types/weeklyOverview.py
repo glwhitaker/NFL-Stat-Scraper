@@ -44,15 +44,16 @@ def findWeeklyResults(webpage):
     writer.writerow([])
 
     # loop through each matchup and create a Matchup object
-    for match in range(0,len(weeklyResults), 2):
-        # create two matchups at a time
-        allMatchups.append(MU.Matchup(weeklyResults[match]))
-        allMatchups.append(MU.Matchup(weeklyResults[match+1]))
+    for match in weeklyResults:
+        # create Matchup object
+        matchup = MU.Matchup(match)
+        # add Matchup object to list
+        allMatchups.append(matchup)
         
-        # write matchups two per row to csv
-        writer.writerow([allMatchups[match].date, '', '', allMatchups[match+1].date])
-        writer.writerow([allMatchups[match].away.name, allMatchups[match].away.score, '', allMatchups[match+1].away.name, allMatchups[match+1].away.score])
-        writer.writerow([allMatchups[match].home.name, allMatchups[match].home.score, '', allMatchups[match+1].home.name, allMatchups[match+1].home.score])
+        # write matchups tO CSV
+        writer.writerow([matchup.date])
+        writer.writerow([matchup.away.name, matchup.away.score])
+        writer.writerow([matchup.home.name, matchup.home.score])
         writer.writerow([])
 
 
