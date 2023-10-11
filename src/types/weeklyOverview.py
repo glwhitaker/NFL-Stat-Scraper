@@ -74,7 +74,7 @@ def writeOverview(allMatchups):
 # return: allMatchups - list of Matchup objects
 def findWeeklyResults(webpage):
     # find weekly results tables
-    weeklyResults = webpage.find('div',{'id':'scores'}).find_all('div',{'class':'game_summary expanded nohover'})
+    weeklyResults = webpage.find('div',{'id':'scores'}).find('div',{'class':'game_summaries'}).find_all('div')
 
     # list of Matchup objects
     allMatchups = []
