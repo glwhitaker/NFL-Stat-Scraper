@@ -4,7 +4,7 @@ import src.types.teamOverview as TO
 from bs4 import BeautifulSoup
 import requests
 
-URL = "https://www.pro-football-reference.com/"
+URL = "https://www.pro-football-reference.com"
 r = requests.get(URL)
 webpage = BeautifulSoup(r.content, "lxml")
 
@@ -26,5 +26,11 @@ elif choice == "2":
     for i in range(len(result)):
         print(str(i+1) + ". " + result[i].name)
     teamChoice = input("Enter option: ")
+    
+    # new webpage appended to URL
+    URL += result[int(teamChoice)-1].link
+    r = requests.get(URL)
+    webpage = BeautifulSoup(r.content, "lxml")
+    
     # write overview
-    TO.writeTeamOverview(result[int(teamChoice)-1])
+    TO.writeTeamOverview(result[int(teamChoice)-1], webpage)

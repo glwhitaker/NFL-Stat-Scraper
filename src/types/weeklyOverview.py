@@ -9,12 +9,14 @@ def highestScore(allMatchups):
     highScore = 0
     # find max
     for match in allMatchups:
-        if match.away.score > highScore:
-            highScore = match.away.score
-            highTeam = match.away.name
-        if match.home.score > highScore:
-            highScore = match.home.score
-            highTeam = match.home.name
+        # if score exists, set score
+        if match.away.score != "TBD" and match.home.score != "TBD":
+            if match.away.score > highScore:
+                highScore = match.away.score
+                highTeam = match.away.name
+            if match.home.score > highScore:
+                highScore = match.home.score
+                highTeam = match.home.name
     
     return highTeam, highScore
 
@@ -26,14 +28,15 @@ def highestScore(allMatchups):
 def largestMargin(allMatchups):
     largeMargin = 0
     for match in allMatchups:
-        if match.away.score > match.home.score:
-            margin = match.away.score - match.home.score
-        else:
-            margin = match.home.score - match.away.score
+        if match.away.score != "TBD" and match.home.score != "TBD":
+            if match.away.score > match.home.score:
+                margin = match.away.score - match.home.score
+            else:
+                margin = match.home.score - match.away.score
 
-        if margin > largeMargin:
-            largeMargin = margin
-            largeTeam = match.winner().name
+            if margin > largeMargin:
+                largeMargin = margin
+                largeTeam = match.winner().name
         
     return largeTeam, largeMargin
 

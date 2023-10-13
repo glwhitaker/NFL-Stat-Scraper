@@ -1,4 +1,5 @@
 from ..classes import matchup as MU
+from ..classes import team as T
 import csv
 
 def findTeams(webpage):
@@ -15,7 +16,7 @@ def findTeams(webpage):
 
     return teams
 
-def writeTeamOverview(team):
+def writeTeamOverview(team, webpage):
     file = open('teamOverview.csv', 'w')
     writer = csv.writer(file)
 
@@ -23,4 +24,8 @@ def writeTeamOverview(team):
     writer.writerow([])
 
     writer.writerow([team.name])
+    
+    results = team.findOverview(webpage)
+    for result in results:
+        writer.writerow([result.string])
 
