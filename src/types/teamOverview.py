@@ -1,5 +1,4 @@
 from ..classes import matchup as MU
-from ..classes import team as T
 import csv
 
 def findTeams(webpage):
