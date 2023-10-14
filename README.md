@@ -13,4 +13,4 @@ Python web scraper to pull statistics from each week.
 - allows the user to get an in depth look at any team
 - writes to csv file:
   - team name
-  - (more coming)
+  - several sections that include various weekly/season stats (not finished)
