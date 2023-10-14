@@ -1,4 +1,5 @@
 from ..classes import matchup as MU
+from ..classes import section as SE
 import csv
 
 # find all teams in a given week
@@ -22,12 +23,12 @@ def findTeams(webpage):
 # return: list of sections
 def findOverview(webpage):
         # find headers
-        headings = webpage.find('div',{'id':'content'}).find_all('h2')
+        sections = []
 
-        # remove last header
-        headings.pop()
-
-        return headings
+        for section in webpage.find('div',{'id':'content'}).find_all('div',{'class':'table_wrapper'}):\
+            sections.append(SE.Section(section))
+        
+        return sections
 
 # write team overview to csv file
 # param: team - Team object
@@ -40,8 +41,14 @@ def writeTeamOverview(team, webpage):
     writer.writerow([])
 
     writer.writerow([team.name])
+    writer.writerow([])
     
     sections = findOverview(webpage)
-    for section in sections:
-        writer.writerow([section.string])
 
+    for section in sections:
+        writer.writerow([section.header.text])
+        writer.writerow(section.headings)
+        for row in section.rows:
+            writer.writerow(row)
+        writer.writerow([])
+    
