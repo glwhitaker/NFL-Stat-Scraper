@@ -10,9 +10,3 @@ class Team:
         else:
             self.score = "TBD"
         self.link = teamGame.td.a['href']
-
-    def findOverview(self, webpage):
-        # find headers
-        headings = webpage.find_all('h2')
-
-        return headings

@@ -27,7 +27,9 @@ def highestScore(allMatchups):
 #         largeMargin - margin of victory
 def largestMargin(allMatchups):
     largeMargin = 0
+    # find max
     for match in allMatchups:
+        # if score exists, set score
         if match.away.score != "TBD" and match.home.score != "TBD":
             if match.away.score > match.home.score:
                 margin = match.away.score - match.home.score
